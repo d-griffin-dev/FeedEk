@@ -1,7 +1,7 @@
 /*
 * FeedEk jQuery RSS/ATOM Feed Plugin v3.0 with YQL API
 * http://jquery-plugins.net/FeedEk/FeedEk.html  https://github.com/enginkizil/FeedEk
-* Author : Engin KIZIL http://www.enginkizil.com   
+* Author : Engin KIZIL http://www.enginkizil.com
 */
 
 (function ($) {
@@ -15,10 +15,10 @@
             DateFormat: "",
             DateFormatLang:"en"
         }, opt);
-        
+
         var id = $(this).attr("id"), i, s = "", dt;
         $("#" + id).empty();
-        if (def.FeedUrl == undefined) return;       
+        if (def.FeedUrl === undefined) return;
         $("#" + id).append('<img src="loader.gif" />');
 
         var YQLstr = 'SELECT channel.item FROM feednormalizer WHERE output="rss_2.0" AND url ="' + def.FeedUrl + '" LIMIT ' + def.MaxCount;
@@ -33,7 +33,7 @@
                 }
                 $.each(data.query.results.rss, function (e, itm) {
                     s += '<li><div class="itemTitle"><a href="' + itm.channel.item.link + '" target="' + def.TitleLinkTarget + '" >' + itm.channel.item.title + '</a></div>';
-                    
+
                     if (def.ShowPubDate){
                         dt = new Date(itm.channel.item.pubDate);
                         s += '<div class="itemDate">';
@@ -42,7 +42,7 @@
                                 moment.lang(def.DateFormatLang);
                                 s += moment(dt).format(def.DateFormat);
                             }
-                            catch (e){s += dt.toLocaleDateString();}                            
+                            catch (e){s += dt.toLocaleDateString();}
                         }
                         else {
                             s += dt.toLocaleDateString();
@@ -51,11 +51,11 @@
                     }
                     if (def.ShowDesc) {
                         s += '<div class="itemContent">';
-                         if (def.DescCharacterLimit > 0 && itm.channel.item.description.length > def.DescCharacterLimit) {
-                            s += itm.channel.item.description.substring(0, def.DescCharacterLimit) + '...';
+                         if (def.DescCharacterLimit > 0 && itm.channel.item.encoded.length > def.DescCharacterLimit) {
+                            s += itm.channel.item.encoded.substring(0, def.DescCharacterLimit) + '...';
                         }
                         else {
-                            s += itm.channel.item.description;
+                            s += itm.channel.item.encoded;
                          }
                          s += '</div>';
                     }
